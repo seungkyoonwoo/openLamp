@@ -153,19 +153,19 @@ ifeq ($(OSNAME),Linux)
     ifeq ($(PTHREAD),shared)
         ifeq ($(COMPILER),arm-gcc-android)
             SYSLIBS = "-lm -ldl"
-            CMODE_DBG = "-g -Wall -Werror-implicit-function-declaration -Wextra -DMDB_DEBUG $(OPTION) $(CCOPT)" 
-            CMODE_REL = "-g -O2 -UMDB_DEBUG -Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT)" 
+            CMODE_DBG += "-Werror-implicit-function-declaration -Wextra -DMDB_DEBUG $(OPTION) $(CCOPT)" 
+            CMODE_REL += "-Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT)" 
         else
             SYSLIBS = "-lpthread -lnsl -lm"
-            CMODE_DBG = "-g -Wall -Werror-implicit-function-declaration -Wextra -DMDB_DEBUG $(OPTION) $(CCOPT) -fvisibility=hidden"
-            CMODE_REL = "-g -O2 -UMDB_DEBUG -Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT) -fvisibility=hidden"
-            CMODE_REL_G = "-g -UMDB_DEBUG -Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT) -fvisibility=hidden"
+            CMODE_DBG += "-Wall -Werror-implicit-function-declaration -Wextra -DMDB_DEBUG $(OPTION) $(CCOPT) -fvisibility=hidden"
+            CMODE_REL += "-Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT) -fvisibility=hidden"
+            CMODE_REL_G += "-Werror-implicit-function-declaration -Wextra $(OPTION) $(CCOPT) -fvisibility=hidden"
         endif
     else
         SYSLIBS = "-L/usr/lib/nptl -lnsl -lm /usr/lib/nptl/libpthread.a /usr/lib/nptl/libc.a"
-        CMODE_DBG = "-g -Wall -DMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT)"
-        CMODE_REL = "-g -O2 -UMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT) -fvisibility=hidden"
-        CMODE_REL_G = "-g -UMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT) -fvisibility=hidden"
+        CMODE_DBG += "-Wall -DMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT)"
+        CMODE_REL += "-UMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT) -fvisibility=hidden"
+        CMODE_REL_G += "-UMDB_DEBUG -I/usr/include/nptl $(OPTION) $(CCOPT) -fvisibility=hidden"
     endif
     ifeq ($(COMPILER),gprof)
         CMODE_DBG = "-g -Wall -DMDB_DEBUG $(OPTION) $(CCOPT) -fvisibility=hidden"
